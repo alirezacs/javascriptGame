@@ -7,19 +7,20 @@
 
 body{
     background-color: #333;
+    overflow: hidden;
 }
 
 /* Game Container Section */
 .game-container{
-    width: 35%;
+    width: 40%;
+    max-height: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-    padding: 30px;
-    margin: 40px 0;
+    padding: 0 30px;
 }
 
 /* Game Status */
@@ -205,4 +206,57 @@ body{
 .game-over-again-btn:hover{
     background-color: #e5e5e5;
     color: #333;
+}
+.game-menu{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    background-color: #e5e5e5;
+    padding: 5rem 0 2rem;
+    transition: 0.3s;
+}
+.game-menu-start-game{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.game-menu-start-game-btn{
+    width: 250px;
+    height: 40px;
+    border: none;
+    background-color: rgb(25, 147, 11);
+    color: #e5e5e5;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin: 10px 0;
+}
+.game-menu-start-game-btn:hover{
+    transform: scale(1.1);
+}
+.game-menu-game-info-container{
+    width: 400px;
+    height: 150px;
+    border: none;
+    box-shadow: 5px 5px 15px 0px rgb(159, 159, 159);
+    padding: 8px;
+    text-align: justify;
+    overflow: auto;
+}
+.game-menu-developer{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 30px 20px;
 }

@@ -11,7 +11,6 @@ class Start{
             prevLocation: null,
         };
         this.actorScore = 0;
-        this.registerEvent();
     }
 
     /* Registering Events */
@@ -23,25 +22,25 @@ class Start{
         window.addEventListener('keydown', this.windowKeyDownEvent);
     }
 
-    windowKeyDownEvent(e) {
+    windowKeyDownEvent = (e) =>  {
         e.preventDefault();
         switch (e.keyCode) {
             case 38:
-                obj.actorMove('top');
+                this.actorMove('top');
                 break;
             case 39:
-                obj.actorMove('right');
+                this.actorMove('right');
                 break;
             case 40:
-                obj.actorMove('bottom');
+                this.actorMove('bottom');
                 break;
             case 37:
-                obj.actorMove('left');
+                this.actorMove('left');
                 break;
         }
     }
 
-    directionBtnClickEvent(e) {
+    directionBtnClickEvent = (e) => {
         switch (e.target.id) {
             case 'game-panel-keyboard-move-top-btn':
                 obj.actorMove('top');
@@ -61,6 +60,11 @@ class Start{
 
     /* Start Game Process */    
     init() {
+
+        /* Register Events */
+        this.registerEvent();
+        /* Register Events */
+
         /* Game Box Container (game-box class) */
         let gameBoxContainer = document.getElementById('game-box');
         gameBoxContainer.innerHTML = ''; // Remove All Game Box Container Childes
@@ -94,8 +98,8 @@ class Start{
                 let gameBoxItem = document.createElement('div');
                 gameBoxItem.classList = 'game-box-item';
                 gameBoxItem.setAttribute('id', 'game-box-item');
-                gameBoxItem.style.width = row.clientWidth / this.division - 10 + 'px';
-                gameBoxItem.style.height = row.clientWidth / this.division - 10 + 'px';
+                gameBoxItem.style.width = row.clientWidth / this.division - 15 + 'px';
+                gameBoxItem.style.height = row.clientWidth / this.division - 15 + 'px';
                 /* Create a Column */
 
                 /* Append Column to Row */
@@ -107,7 +111,8 @@ class Start{
                     id: this.gameBoxItems.length,
                     locationX: i,
                     locationY: j,
-                    isPit: false
+                    isPit: false,
+                    isUsed: false,
                 };
                 /* Seting Column Info */
 
@@ -136,6 +141,9 @@ class Start{
         /* Start Timer */
         this.startGameTimer();
         /* Start Timer */
+
+        console.log('Init End');
+
 
     }
     /* Start Game Process */
@@ -246,6 +254,11 @@ class Start{
 
         /* Stop Game If User Go To a Pit */
         if (actorCurrentColumnInfo[0].isPit) {
+            for (let i of this.gameBoxItems) {
+                if (i.isPit) {
+                    document.getElementsByClassName('game-box-item-row')[i.locationX].children[i.locationY].style.backgroundColor = 'red';
+                }
+            }
             this.showGameOver(this.actorScore);
         } else {
             /* Recognition Move Direction */
@@ -254,21 +267,24 @@ class Start{
                 case 'top': {
                     if (!(actorCurrentLocation.x <= 0)) {
                         /* If Actor Don't Get Walls, Resume... */
+                        if (! actorCurrentColumnInfo[0].isUsed) {
+                            this.actorScore++;
+                        }
+                        document.getElementById('game-status-score-span').innerHTML = `${this.actorScore} Score`;
                         this.actor.currentLocation.x--;
                         actorCurrentColumn.innerHTML = '';
                         let actorNextLocation = document.getElementsByClassName('game-box-item-row')[actorCurrentLocation.x - 1].children[actorCurrentLocation.y];
                         actorNextLocation.appendChild(actorElement);
-                        this.actorScore++;
-                        document.getElementById('game-status-score-span').innerHTML = `${this.actorScore} Score`;
+                        this.gameBoxItems[actorCurrentColumnInfo[0].id].isUsed = true;
                         /* If Actor Don't Get Walls, Resume... */
                     } else {
                         /* If Actor Get Walls, Stop Game And Do... */
+                        this.actorScore--;
+                        document.getElementById('game-status-score-span').innerHTML = `${this.actorScore} Score`;
                         document.getElementById('game-status-accident').style.display = 'flex';
                         actorCurrentColumn.style.border = '1px solid';
                         actorCurrentColumn.style.borderTopColor = '#e01818';
                         this.actorElement.style.color = '#e01818';
-                        this.actorScore--;
-                        document.getElementById('game-status-score-span').innerHTML = `${this.actorScore} Score`;
                         gameBoxShake();
                         /* If Actor Get Walls, Stop Game And Do... */
                     }
@@ -280,12 +296,16 @@ class Start{
                 case 'right': {
                         /* If Actor Don't Get Walls, Resume... */
                     if (!(actorCurrentLocation.y == this.division - 1)) {
-                        this.actorScore++;
+                        /* If Actor Don't Get Walls, Resume... */
+                        if (! actorCurrentColumnInfo[0].isUsed) {
+                            this.actorScore++;
+                        }
                         document.getElementById('game-status-score-span').innerHTML = `${this.actorScore} Score`;
                         this.actor.currentLocation.y++;
                         actorCurrentColumn.innerHTML = '';
                         let actorNextLocation = document.getElementsByClassName('game-box-item-row')[actorCurrentLocation.x].children[actorCurrentLocation.y + 1];
                         actorNextLocation.appendChild(actorElement);
+                        this.gameBoxItems[actorCurrentColumnInfo[0].id].isUsed = true;
                         /* If Actor Don't Get Walls, Resume... */
                     } else {
                         /* If Actor Get Walls, Stop Game And Do... */
@@ -306,12 +326,15 @@ class Start{
                 case 'bottom': {
                     if (!(actorCurrentLocation.x == this.division - 1)) {
                         /* If Actor Don't Get Walls, Resume... */
-                        this.actorScore++;
+                        if (! actorCurrentColumnInfo[0].isUsed) {
+                            this.actorScore++;
+                        }
                         document.getElementById('game-status-score-span').innerHTML = `${this.actorScore} Score`;
                         this.actor.currentLocation.x++;
                         actorCurrentColumn.innerHTML = '';
                         let actorNextLocation = document.getElementsByClassName('game-box-item-row')[actorCurrentLocation.x + 1].children[actorCurrentLocation.y];
                         actorNextLocation.appendChild(actorElement);
+                        this.gameBoxItems[actorCurrentColumnInfo[0].id].isUsed = true;
                         /* If Actor Don't Get Walls, Resume... */
                     } else {
                         /* If Actor Get Walls, Stop Game And Do... */
@@ -332,12 +355,15 @@ class Start{
                 case 'left': {
                     if (!(actorCurrentLocation.y <= 0)) {
                         /* If Actor Don't Get Walls, Resume... */
-                        this.actorScore++;
+                        if (! actorCurrentColumnInfo[0].isUsed) {
+                            this.actorScore++;
+                        }
                         document.getElementById('game-status-score-span').innerHTML = `${this.actorScore} Score`;
                         this.actor.currentLocation.y--;
                         actorCurrentColumn.innerHTML = '';
                         let actorNextLocation = document.getElementsByClassName('game-box-item-row')[actorCurrentLocation.x].children[actorCurrentLocation.y - 1];
                         actorNextLocation.appendChild(actorElement);
+                        this.gameBoxItems[actorCurrentColumnInfo[0].id].isUsed = true;
                         /* If Actor Don't Get Walls, Resume... */
                     } else {
                         /* If Actor Get Walls, Stop Game And Do... */
@@ -356,6 +382,7 @@ class Start{
                     
             }
             /* Recognition Move Direction */
+            console.log(this.gameBoxItems);
         }
         /* Stop Game If User Go To a Pit */
         
@@ -370,12 +397,15 @@ class Start{
         gameOverPage.classList = 'game-over';
         gameOverPage.innerHTML = '<h1>Game Over!</h1>';
         gameOverPage.innerHTML += `<h5>Your Score : ${actorScore}</h5>`;
-        gameOverPage.innerHTML += "<button class='game-over-again-btn' id='game-over-again-btn' onClick='obj.init()'>Again</button>";
+        gameOverPage.innerHTML += "<button class='game-over-again-btn' id='game-over-again-btn'>Again</button>";
         /* Create Game Over Div And Set Styles */
 
         /* Append Game Over Page In To Game Box Container */
         let gameBoxContainer = document.getElementById('game-box');
         gameBoxContainer.append(gameOverPage);
+        document.getElementById('game-over-again-btn').addEventListener('click', () => {
+            this.init();
+        });
         /* Append Game Over Page In To Game Box Container */
 
         /* Stop Game Timer */
@@ -383,25 +413,39 @@ class Start{
         /* Stop Game Timer */
 
         /* Remove Keyboard Event */
-        window.removeEventListener('keydown', windowKeyDownEvent);
+        window.removeEventListener('keydown', this.windowKeyDownEvent);
         /* Remove Keyboard Event */
 
         /* Remove Buttons Event */
-        for (i of actorMoveBtn) {
-            i.removeEventListener('click', directionBtnClickEvent);
+        let actorMoveBtn = document.getElementsByClassName('game-actor-move-btn');
+        for (let i of actorMoveBtn) {
+            i.removeEventListener('click', this.directionBtnClickEvent);
         }
         /* Remove Buttons Event */
+
+        console.log('Show Game Over End');
 
     }
     /* Show Game Over Page */
 
 
 }
-
-let obj = new Start(5);
-obj.init();
-
 /* Game Events */
 
+let resetButton = document.getElementById('game-panel-reset-btn');
+resetButton.addEventListener('click', () => {
+    console.log(obj.init());
+});
+
+
+/* Start Game Button Event */
+let startGameButton = document.getElementById('game-menu-start-game-btn');
+startGameButton.addEventListener('click', (e) => {
+    let gameMenu = document.getElementById('game-menu');
+    gameMenu.style.transform = 'translateX(100%)';
+    let obj = new Start(5);
+    obj.init();
+});
+/* Start Game Button Event */
 
 /* Game Events */
