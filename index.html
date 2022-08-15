@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Bootstrap Css Link -->
+    <link rel="stylesheet" href="css/bootstrap/css/bootstrap.css">
+    <!-- Bootstrap Css Link -->
+
+    <!-- FontAwesome Link -->
+    <link rel="stylesheet" href="css/font-awesome/css/all.css">
+    <!-- FontAwesome Link -->
+
+    <!-- Main Css Link -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Main Css Link -->
+</head>
+<body>
+    
+
+    <div class="container" id="container">
+
+        <!-- Game Container -->
+        <div class="game-container">
+
+            <!-- Game Status Sectino -->
+            <div class="game-status">
+                <div class="game-status-score">
+                    <span id="game-status-score-span">8 </span>
+                </div>
+                <div class="game-status-accident" id="game-status-accident">
+                    <img src="images/car-accident.png" alt="Car Accident">
+                </div>
+                <div class="game-status-timer">
+                    <span id="game-status-timer-container">0:0:0</span>
+                </div>
+            </div>
+            <!-- Game Status Sectino -->
+
+            <!-- Game Box Section -->
+            <div class="game-box" id="game-box">
+                <div class="game-over">
+
+                </div>
+            </div>
+            <!-- Game Box Section -->
+
+            <!-- Game Panel Section -->
+            <div class="game-panel">
+                
+                <!-- Game Panel ==> Keyboard Buttons -->
+                <div class="game-panel-keyboard">
+                    <div class="game-panel-keyboard-move-top">
+                        <button class="game-panel-keyboard-move-top-btn game-actor-move-btn" id="game-panel-keyboard-move-top-btn">
+                            <i class="fa-solid fa-arrow-up-long"></i>
+                        </button>
+                    </div>
+                    <div class="game-panel-keyboard-move-right">
+                        <button class="game-panel-keyboard-move-right-btn game-actor-move-btn" id="game-panel-keyboard-move-right-btn">
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </button>
+                    </div>
+                    <div class="game-panel-keyboard-move-bottom">
+                        <button class="game-panel-keyboard-move-bottom-btn game-actor-move-btn" id="game-panel-keyboard-move-bottom-btn">
+                            <i class="fa-solid fa-arrow-down-long"></i>
+                        </button>
+                    </div>
+                    <div class="game-panel-keyboard-move-left">
+                        <button class="game-panel-keyboard-move-left-btn game-actor-move-btn" id="game-panel-keyboard-move-left-btn">
+                            <i class="fa-solid fa-arrow-left-long"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- Game Panel ==> Keyboard Buttons -->
+
+                <!-- Game Panel ==> Reset Button -->
+                <div class="game-panel-reset">
+                    <button class="game-panel-reset-btn" onClick='obj.init()'>
+                        Reset Game
+                    </button>
+                </div>
+                <!-- Game Panel ==> Reset Button -->
+
+            </div>
+            <!-- Game Panel Section -->
+
+        </div>
+        <!-- Game Container -->
+        
+    </div>
+
+
+
+    <!-- Bootstrap Js Link -->
+    <script src="css/bootstrap/js/bootstrap.js"></script>
+    <!-- Bootstrap Js Link -->
+
+    <!-- Main Js Link -->
+    <script src="js/main.js"></script>
+    <!-- Main Js Link -->
+</body>
+</html>

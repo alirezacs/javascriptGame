@@ -1,0 +1,208 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body{
+    background-color: #333;
+}
+
+/* Game Container Section */
+.game-container{
+    width: 35%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin: 40px 0;
+}
+
+/* Game Status */
+.game-status{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.game-status-score{
+    color: #e5e5e5;
+    font-weight: bold;
+    font-size: 20px;
+}
+.game-status-timer{
+    color: #e5e5e5;
+    font-weight: bold;
+    font-size: 20px;
+}
+.game-status-accident{
+    width: 150px;
+    height: 45px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.game-status-accident img{
+    width: 40px;
+}
+
+/* Game Box Section */
+.game-box{
+    background-color: #e5e5e5;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 0 0 10px;
+    box-shadow: 5px 5px 20px #838383;
+    position: relative;
+    overflow: hidden;
+}
+.game-box-shake{
+    animation: game-box-shake 0.1s 3;
+}
+@keyframes game-box-shake {
+    0%{
+        transform: translateX(0px);
+    }
+    25%{
+        transform: translateX(4px);
+    }
+    50%{
+        transform: translateX(0px);
+    }
+    75%{
+        transform: translateX(-4px);
+    }
+    100%{
+        transform: translateX(0px);
+    }
+}
+
+/* Game Box Item Section */
+.game-box-item-row{
+    max-width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.game-box-item{
+    background-color: #a0a0a0;
+    border: 1px solid #333;
+    display: inline;
+    margin: 5px 0;
+}
+
+/* Game Panel Section */
+.game-panel{
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #e5e5e5;
+    border-radius: 8px;
+}
+/* Game Panel Keyboard */
+.game-panel-keyboard{
+    width: 90px;
+    height: 90px;
+    position: relative;
+}
+
+/* Game Panel Keyboard Move Button */
+.game-panel-keyboard div{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: #222;
+    transition: 0.3s;
+}
+.game-panel-keyboard div button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+    color: #e5e5e5;
+}
+.game-panel-keyboard div:hover{
+    transform: scale(0.9);
+}
+.game-panel-keyboard-move-top{
+    top: 0;
+    left: calc(50% - 15px);
+}
+.game-panel-keyboard-move-right{
+    right: 0;
+    top: calc(50% - 15px);
+}
+.game-panel-keyboard-move-bottom{
+    bottom: 0;
+    left: calc(50% - 15px);
+}
+.game-panel-keyboard-move-left{
+    left: 0;
+    top: calc(50% - 15px);
+}
+
+/* Game Panel Reset */
+.game-panel-reset{
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.game-panel-reset button{
+    border: 1px solid #222;
+    padding: 5px 8px;
+    background-color: #e5e5e5;
+    color: #222;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+.game-panel-reset button:hover{
+    background-color: #222;
+    color: #e5e5e5
+}
+
+/* Acotr Section */
+.game-actor{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Game Over Section */
+.game-over{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    color: #e5e5e5;
+}
+.game-over-again-btn{
+    width: 180px;
+    height: 32px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    background: transparent;
+    color: #e5e5e5;
+    margin: 8px 0;
+}
+.game-over-again-btn:hover{
+    background-color: #e5e5e5;
+    color: #333;
+}
