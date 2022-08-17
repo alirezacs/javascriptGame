@@ -1,4 +1,6 @@
 
+localStorage.actorRecord = 0;
+
 class Start{
     constructor(division) {
         this.division = division;
@@ -139,6 +141,7 @@ class Start{
         /* Set Pits */
 
         /* Start Timer */
+        clearInterval(this.gameTimer);
         this.startGameTimer();
         /* Start Timer */
 
@@ -150,7 +153,6 @@ class Start{
 
     /* Start Timer */
     startGameTimer() {
-        clearInterval(this.gameTimer);
         let gameStatusTimerContainer = document.getElementById('game-status-timer-container');
         let hourse = 0;
         let minutes = 0;
@@ -382,7 +384,15 @@ class Start{
                     
             }
             /* Recognition Move Direction */
-            console.log(this.gameBoxItems);
+            
+            /* Set Record */
+            if (this.actorScore > localStorage.actorRecord) {
+                localStorage.actorRecord = this.actorScore;
+            }
+            /* Set Record */
+
+            console.log(localStorage.actorRecord);
+
         }
         /* Stop Game If User Go To a Pit */
         
@@ -397,6 +407,11 @@ class Start{
         gameOverPage.classList = 'game-over';
         gameOverPage.innerHTML = '<h1>Game Over!</h1>';
         gameOverPage.innerHTML += `<h5>Your Score : ${actorScore}</h5>`;
+        /* If Actor Has New Record Insert Below Tag */
+        if (actorScore >= localStorage.actorRecord) {
+            gameOverPage.innerHTML += `<h6>New Record : ${localStorage.actorRecord}</h6>`;
+        }
+        /* If Actor Has New Record Insert Below Tag */
         gameOverPage.innerHTML += "<button class='game-over-again-btn' id='game-over-again-btn'>Again</button>";
         /* Create Game Over Div And Set Styles */
 
@@ -404,7 +419,24 @@ class Start{
         let gameBoxContainer = document.getElementById('game-box');
         gameBoxContainer.append(gameOverPage);
         document.getElementById('game-over-again-btn').addEventListener('click', () => {
-            this.init();
+            let level = document.querySelector('.game-menu-start-game-level .radio-group input[type=radio]:checked').value;
+            switch (level) {
+                case 'easy': {
+                    let obj = new Start(5);
+                    obj.init();
+                }
+                break;
+                case 'medium': {
+                    let obj = new Start(8);
+                    obj.init();
+                }
+                break;
+                case 'hard': {
+                    let obj = new Start(10);
+                    obj.init();
+                }
+                break;
+            }
         });
         /* Append Game Over Page In To Game Box Container */
 
@@ -428,24 +460,66 @@ class Start{
     }
     /* Show Game Over Page */
 
+    /* Reset Game */
+    resetGame() {
+        let level = document.querySelector('.game-menu-start-game-level .radio-group input[type=radio]:checked').value;
+        switch (level) {
+            case 'easy': {
+                let obj = new Start(5);
+                obj.init();
+            }
+            break;
+            case 'medium': {
+                let obj = new Start(8);
+                obj.init();
+            }
+            break;
+            case 'hard': {
+                let obj = new Start(10);
+                obj.init();
+            }
+            break;
+        }
+    }
+    /* Reset Game */
+
 
 }
 /* Game Events */
 
-let resetButton = document.getElementById('game-panel-reset-btn');
-resetButton.addEventListener('click', () => {
-    console.log(obj.init());
-});
 
 
 /* Start Game Button Event */
+
 let startGameButton = document.getElementById('game-menu-start-game-btn');
 startGameButton.addEventListener('click', (e) => {
+    let level = document.querySelector('.game-menu-start-game-level .radio-group input[type=radio]:checked').value;
+    switch (level) {
+        case 'easy': {
+            let obj = new Start(5);
+            obj.init();
+        }
+        break;
+        case 'medium': {
+            let obj = new Start(8);
+            obj.init();
+        }
+        break;
+        case 'hard': {
+            let obj = new Start(10);
+            obj.init();
+        }
+        break;
+    }
     let gameMenu = document.getElementById('game-menu');
     gameMenu.style.transform = 'translateX(100%)';
-    let obj = new Start(5);
-    obj.init();
 });
 /* Start Game Button Event */
 
 /* Game Events */
+/* Reset Button Event */
+let resetButton = document.getElementById('game-panel-reset-btn');
+resetButton.addEventListener('click', () => {
+    obj.resetGame();
+});
+/* Reset Button Event */
